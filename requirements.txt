@@ -1,0 +1,6 @@
+ipython
+jupyter
+pandas==0.20.2
+matplotlib==2.02
+seaborn==0.7.1
+bokeh==0.12.4 
