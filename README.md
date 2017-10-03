@@ -5,6 +5,9 @@ Use these to install dependencies:
 
 `pip install -r requirements.txt`
 
-Then go through the codebook before you run:
+Then go through the codebook and the slides(PyCon-presentation.odp - Use LibreOffice).
 
-jupyter notebook/Data_visualisation_tool_YT.ipynb
+
+Then you can run the notebook:
+
+`jupyter notebook/Data_visualisation_tool_YT.ipynb`
