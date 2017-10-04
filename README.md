@@ -10,4 +10,4 @@ Then go through the codebook and the slides(PyCon-presentation.odp - Use LibreOf
 
 Then you can run the notebook:
 
-`jupyter notebook/Data_visualisation_tool_YT.ipynb`
+`jupyter notebook Data_visualisation_tool_YT.ipynb`
