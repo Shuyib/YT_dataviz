@@ -4,3 +4,13 @@ Version: 0.1
 
 This codebook is based on advice by J.Leek which can be found here: 
 https://github.com/jtleek/datasharing
+
+Description:
+
+The datasets available will be YouTube data collected for the channel Sliceace; It is about
+on extreme sports like paintball and skateboarding. The other is channel about gaming and
+vlogs among other things. This is how the data was collected from YouTube since i'm 
+assuming the reader is interested in trying out the tool for themselves. 
+
+
+
