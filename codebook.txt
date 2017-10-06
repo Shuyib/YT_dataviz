@@ -5,12 +5,31 @@ Version: 0.1
 This codebook is based on advice by J.Leek which can be found here: 
 https://github.com/jtleek/datasharing
 
+
 Description:
 
 The datasets available will be YouTube data collected for the channel Sliceace; It is about
 on extreme sports like paintball and skateboarding. The other is channel about gaming and
 vlogs among other things. This is how the data was collected from YouTube since i'm 
-assuming the reader is interested in trying out the tool for themselves. 
+assuming the reader is interested in trying out the tool for themselves/their own channels.
+
+https://photos.app.goo.gl/Ib6haDXJqMC6Sgfk1 - this is a photo album that will show you 
+how to get your data. 
+
+In addition, the other channel we are using for comparison is monetised meaning that the 
+content creator gets money out of their channel. 
+
+
+Format:
+A Dataframe with 573 rows and 41 columns for the channel sliceace
+A Dataframe with 1526 rows and 54 columns for a channel 
+
+
+Variables:
+
+These are the number of columns in the dataset. Notice they are different for the two 
+channels
+
 
 
 
