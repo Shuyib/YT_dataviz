@@ -32,47 +32,108 @@ channels. I'll try to explain what they mean to the best of my ability. At first
 they look straightforward but right now. I'm already facing challenges since i'm not 
 sure what some mean i.e the variables.
 
-* watch_time_minutes: time in minutes people spend watching your videos.
+* watch_time_minutes: time in minutes people spend watching your videos. Big numbers good
+small numbers bad.
+
 * views : How unique people have discovered your channel and probably looked at the 
 content like introductory video. P.s my channel doesn't have one. :)
-* average_view_duration
-* average_percentage_viewed 
-* card_clicks 
-* cards_shown
-* clicks_per_card_shown
-* card_teaser_clicks
-* card_teasers_shown
-* clicks_per_card_teaser_shown
-* end_screen_elements_shown
-* end_screen_element_clicks
-* clicks_per_end_screen_element_shown
-* youtube_red_watch_time_minutes
-* youtube_red_views
-* youtube_red_watch_time_hours
-* annotation_clicks
-* clickable_annotations_shown
-* annotation_click_through_rate
-* annotation_closes
-* closable_annotations_shown
-* annotation_close_rate
-* annotations_shown
-* videos_published
-* videos_added
-* likes
-* likes_added
-* likes_removed
-* dislikes
-* dislikes_added
-* dislikes_removed
-* shares 
-* comments
-* videos_in_playlists
-* videos_added_to_playlists
-* videos_removed_from_playlists
-* subscribers
-* subscribers_gained
-* subscribers_lost
-* watch_time_hours 
+
+* average_view_duration: The mean views of the previous variable.
+
+* average_percentage_viewed: views as a percentage
+ 
+* card_clicks: The "i" icon usually at the top right of videos. How many people have clicked
+it.
+
+* cards_shown: How many of those cards were seen in your video.
+
+* clicks_per_card_shown: clicks each card gets from different viewers.
+
+* card_teaser_clicks: clicks the card get as soon as the text along with the "i" icon is 
+displayed to viewer.
+
+* card_teasers_shown: how many viewers have made it till the card text in the "i" is 
+shown.
+
+* clicks_per_card_teaser_shown: number of times the card has been clicked for different 
+videos as soon as the "i" icon and text appears.
+
+* end_screen_elements_shown: end screen elements are the subscribe icon seen at the end
+of the video, it could be a playlist or playlist. So this is how many that were seen by 
+the viewer of the video who've watched the video until the end or till when the element 
+is shown.
+
+* end_screen_element_clicks: number of times the viewers have clicked your screen elements.
+
+* clicks_per_end_screen_element_shown: How much each end screen element per video has been
+clicked.
+
+* youtube_red_watch_time_minutes: same as what i pointed out before for more information.
+Check this out `https://www.youtube.com/red`
+
+* youtube_red_views: same as what i pointed out before for more information.
+Check this out `https://www.youtube.com/red`
+
+* youtube_red_watch_time_hours: same as what i pointed out before except time is in 
+hours for more information.
+Check this out `https://www.youtube.com/red`
+
+* annotation_clicks: I looked at a wikihow post to remember what annotations are here: 
+https://www.wikihow.com/Add-Annotations-to-a-YouTube-Video. So how many times your 
+"Add Speech Bubble", "Add Spotlight","Label", "Title" or "Add Note" were clicked.
+
+* clickable_annotations_shown: The number of "Add Speech Bubble", "Add Spotlight","Label", "Title" or "Add Note"
+that can be clicked and thus, are shown in the video.
+
+* annotation_click_through_rate: rate at which people click these annotations.
+
+* annotation_closes: How many times the viewers have clicked the "x" icon in annotations.
+
+* closable_annotations_shown: number of annotations that can be closed in your videos.
+
+* annotation_close_rate: rate at which people click close your annotations.
+
+* annotations_shown: How many annotations are seen in your videos.
+
+* videos_published: number of videos that can be seen on a your YouTube channel and 
+available for view to the public.
+
+* videos_added : number of videos the content creator has added.
+
+* likes: The number of people who clicked on the "thumbs-up" icon.
+
+* likes_added: Seems to cumulative number of likes your videos get.
+
+* likes_removed: The number of people who initially liked the video but decided to unclick
+the "thumbs-up" icon.  Also, they could have closed their YouTube account.
+
+* dislikes: The number of people who clicked on the "thumbs-down" icon.
+
+* dislikes_added: Seems to cumulative number of dislikes your videos get.
+
+* dislikes_removed: The number of people who initially liked the video but decided to unclick
+the "thumbs-down" icon. Also, they could have closed their YouTube account.
+
+* shares: How many times your videos was shared in different social media.
+
+* comments: How many comments you got from your videos.
+
+* videos_in_playlists: Generally the number of videos in your playlists. Don't have to be
+your videos.
+
+* videos_added_to_playlists: number of videos added to playlists.
+
+* videos_removed_from_playlists: number of videos removed from a playlist created.
+
+* subscribers: How many subscribers did you have.
+
+* subscribers_gained: Number of subscribers you've gotten.
+
+* subscribers_lost: Number of subscribers you've lost.
+
+* watch_time_hours: time in hours people spend watching your videos. Big numbers good
+small numbers bad.
+
 * channel i added this one to try make a hover tool to differentiate channels. This is 
 simply
 
