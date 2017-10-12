@@ -26,7 +26,7 @@ Afterwards, you can start the notebook like this:
 All you have to do is run the code like demonstrated here:
 
 <p align="center">
-<img src="images/run.notebook.png" width="550">
+<img src="images/run_notebook.png" height = "650" width="250">
 </p>
 
 
@@ -54,7 +54,7 @@ Please type in your title: "views for other channel from 2011 to 2017" [Press En
 Please type in your y axis label "views" [Press Enter]
 "views" [Press Enter]
 
-								Fingers crossed
+*Fingers crossed*
 
 This is what you'll get 
 
