@@ -14,15 +14,23 @@ vlogs among other things. This is how the data was collected from YouTube since 
 assuming the reader is interested in trying out the tool for themselves/their own channels.
 
 https://photos.app.goo.gl/Ib6haDXJqMC6Sgfk1 - this is a photo album that will show you 
-how to get your data. 
+how to get your data. What you'll get is a folder, click on the watch_time and rename
+the first file like i have yt_date.csv. Prior to renaming the file, it'll look like this
+
+e92OL5XV42NvuV4MSjeggQ.20090911.20170603.UN001.date_csv 
+e92OL5XV42NvuV4MSjeggQ.20090911.20170603.UN001 this varies depending on your channel.
+
+For the other channel you want to compare you could call it exotic_yt_date.csv. So that
+the tool will work on your machine.
 
 In addition, the other channel we are using for comparison is monetised meaning that the 
 content creator gets money out of their channel. 
 
 
 Format:
-A Dataframe with 573 rows and 41 columns for the channel sliceace
+A Dataframe with 573 rows and 41 columns for the channel Sliceace
 A Dataframe with 1526 rows and 54 columns for a channel 
+
 
 
 Variables:
@@ -31,6 +39,9 @@ These are the number of columns in the dataset. Notice they are different for th
 channels. I'll try to explain what they mean to the best of my ability. At first glance, 
 they look straightforward but right now. I'm already facing challenges since i'm not 
 sure what some mean i.e the variables.
+
+* date: in year-month-date format. Answers the question when all these other variables 
+were recorded.
 
 * watch_time_minutes: time in minutes people spend watching your videos. Big numbers good
 small numbers bad.
@@ -137,6 +148,15 @@ small numbers bad.
 * channel i added this one to try make a hover tool to differentiate channels. This is 
 simply
 
+If you have any edits that i should know about please submit a pull request.
+
+Data preprocessing:
+
+Didn't do much when it comes to cleaning since it follows the tidy format. All i did is 
+add a variable called Sliceace for one channel. Furthermore, i converted the date into a 
+format that works well with Bokeh.
+
+This document was prepared with TextWrangler version 5.5.2 (397016)
 
 
 
