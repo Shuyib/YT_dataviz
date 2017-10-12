@@ -1,14 +1,14 @@
 # YT_dataviz
 This is a Data visualisation tool, I presented at PyConKE on 28th September 2017 at USIU-Africa. I make use of Jupyter notebooks, Python, Pandas, Bokeh to make a multipurpose data visualisation tool that addresses the limitations i've seen in other alternatives according to the presentation i gave.
 
-You can reach by email or saying Hi! on twitter [https://twitter.com/Shuyin_ben](@Shuyin_ben)
+You can reach by email or saying Hi! on twitter [@Shuyin_ben](https://twitter.com/Shuyin_ben)
 
 Prerequisites:
-* You should know how to use python programming especially pandas and Bokeh
-* Know how to use Jupyter notebooks
+* Programming basics and python programming. Familiarity with pandas and Bokeh.
+* Know how to use Jupyter notebooks.
 * Some knowledge about terminal/shell.
 * If you manage to install everything install and run jupyter then all you need to do is
-change the title and y-axis of the graphs
+change the title and y-axis of the graphs. 
 
 Use this to install dependencies:
 
@@ -26,7 +26,7 @@ Afterwards, you can start the notebook like this:
 All you have to do is run the code like demonstrated here:
 
 <p align="center">
-<img src="images/run_notebook.png" height = "650" width="250">
+<img src="images/run_notebook.png" width="550">
 </p>
 
 
