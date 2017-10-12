@@ -21,7 +21,8 @@ e92OL5XV42NvuV4MSjeggQ.20090911.20170603.UN001.date_csv
 e92OL5XV42NvuV4MSjeggQ.20090911.20170603.UN001 this varies depending on your channel.
 
 For the other channel you want to compare you could call it exotic_yt_date.csv. So that
-the tool will work on your machine.
+the tool will work on your machine. Replace the files available with your own YouTube data.
+After renaming them exactly how i've pointed out.
 
 In addition, the other channel we are using for comparison is monetised meaning that the 
 content creator gets money out of their channel. 
