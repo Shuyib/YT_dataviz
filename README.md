@@ -52,7 +52,7 @@ it again and follow the above procedure.
 Moreover, you'll be asked the same question for the next channel. Follow the same 
 procedure. Except change the title of the graph like this.
 
-Please type in your title: "views for other channel from 2011 to 2017" [Press Enter]
+Please type in your title: "views for other channel from 2013 to 2017" [Press Enter]
 
 Please type in your y axis label "views" [Press Enter]
 
@@ -74,11 +74,19 @@ like in the first image.
 
 You know the drill :) 
 
-Please type in your title: "subscribers_gained for Sliceace channel from 2011 to 2017" [Press Enter]
+Please type in your title: "subscribers_gained for Sliceace channel from 2011 to 2017" [Press Enter/return]
 
-Please type in your y axis label "subscribers_gained" [Press Enter]
+Please type in your y axis label "subscribers_gained" [Press Enter/return]
 
-"subscribers_gained" [Press Enter]
+"subscribers_gained" [Press Enter/return]
+
+For the other channel
+
+Please type in your title: "subscribers_gained for other channel from 2013 to 2017" [Press Enter/return]
+
+Please type in your y axis label "subscribers_gained" [Press Enter/return]
+
+"subscribers_gained" [Press Enter/return]
 
 Try for average_view_duration and the other variables i've mentioned in the codebook.
 
