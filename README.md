@@ -1,7 +1,7 @@
 # YT_dataviz
 This is a Data visualisation tool, I presented at PyConKE on 28th September 2017 at USIU-Africa. I make use of Jupyter notebooks, Python, Pandas, Bokeh to make a multipurpose data visualisation tool that addresses the limitations i've seen in other alternatives according to the presentation i gave.
 
-You can reach by email or saying Hi! on twitter [@Shuyin_ben](https://twitter.com/Shuyin_ben)
+You can reach me via email or saying Hi! on twitter [@Shuyin_ben](https://twitter.com/Shuyin_ben)
 
 Prerequisites:
 * Programming basics and python programming. Familiarity with pandas and Bokeh.
