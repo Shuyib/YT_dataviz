@@ -40,11 +40,11 @@ times.
 
 Type the following to check if it works in this **ORDER**. If you don't you'll get many errors. For example:
 
-Please type in your title: "views for Sliceace channel from 2011 to 2017" [Press Enter]
+Please type in your title: "views for Sliceace channel from 2011 to 2017" [Press Enter/return]
 
-Please type in your y axis label "views" [Press Enter]
+Please type in your y axis label "views" [Press Enter/return]
 
-"views" [Press Enter]
+"views" [Press Enter/return]
 
 Type what is in quotes in the text box and don't include the **quotes**. If you mess up run
 it again and follow the above procedure.
@@ -52,11 +52,11 @@ it again and follow the above procedure.
 Moreover, you'll be asked the same question for the next channel. Follow the same 
 procedure. Except change the title of the graph like this.
 
-Please type in your title: "views for other channel from 2013 to 2017" [Press Enter]
+Please type in your title: "views for other channel from 2013 to 2017" [Press Enter/return]
 
-Please type in your y axis label "views" [Press Enter]
+Please type in your y axis label "views" [Press Enter/return]
 
-"views" [Press Enter]
+"views" [Press Enter/return]
 
 **Fingers crossed**
 
