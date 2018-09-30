@@ -10,6 +10,29 @@ library(colourpicker)
 library(DT)
 library(plotly)
 
+# importing the data with the read_csv function
+# my channel verus James Karanu's channel 
+df <- read_csv('data/yt_date.csv') 
+df2 <- read_csv('data/exotic_yt_date.csv')
+
+# identifying the columns of interest 
+# date and any other variables that follow which i presume will be in the y axis
+
+# starter code for the plot
+ggplot(df, aes(date, subscribers_gained)) + geom_point() + geom_line()
+
+# Using pipes
+df %>% ggplot(aes(date, subscribers_gained)) + geom_point() + geom_line()
+
+# Make a function that will allow you to call a different variable in the y axis 
+choose_y_axis_plot <- function(dataframe = dataframe1, yaxis = yaxis) {
+  ggplot(dataframe1, aes(date, yaxis)) + geom_point() + geom_line()
+}
+
+# changing the columns that require dropdowns into factors
+# first these columns are not friendly to data visualization
+
+
 # Define UI for application: consists of various things the user will interract with
 ui <- fluidPage(
    
