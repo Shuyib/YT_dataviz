@@ -19,15 +19,21 @@ df2 <- read_csv('data/exotic_yt_date.csv')
 # date and any other variables that follow which i presume will be in the y axis
 
 # starter code for the plot
-ggplot(df, aes(date, subscribers_gained)) + geom_point() + geom_line()
+ggplot(df, aes(date, subscribers_gained)) + geom_area() + geom_line()
 
 # Using pipes
-df %>% ggplot(aes(date, subscribers_gained)) + geom_point() + geom_line()
+df %>% ggplot(aes(date, subscribers_gained)) + geom_line() + geom_area()
 
 # Make a function that will allow you to call a different variable in the y axis 
-choose_y_axis_plot <- function(dataframe = dataframe1, yaxis = yaxis) {
-  ggplot(dataframe1, aes(date, yaxis)) + geom_point() + geom_line()
+# adding ggplotly functionality
+choose_y_axis_plot <- function(dataframe, yaxis) {
+   p <- ggplot(dataframe, aes(date, yaxis)) + geom_line() + geom_area()
+   ggplotly(p)
 }
+
+# call to the function that allows you to change you axis label
+# change the labels to something the users can easily toggle
+choose_y_axis_plot(df, df$views)
 
 # changing the columns that require dropdowns into factors
 # first these columns are not friendly to data visualization
