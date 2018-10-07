@@ -29,11 +29,15 @@ df %>% ggplot(aes(date, subscribers_gained)) + geom_line() + geom_area()
 # adding ggplotly functionality
 # redo exercise to fix this
 choose_y_axis_plot <- function(dataframe, yaxis = readline(), dataframe2, yaxis2 = readline()) {
-   p1 <- ggplot(dataframe, aes(date, yaxis)) + geom_line() + geom_area()
-   p2 <- ggplot(dataframe2, aes(date,yaxis2)) + geom_line() + geom_area()
+   p1 <- ggplot(dataframe, aes(date, yaxis)) + geom_line() + geom_area() +
+   ggtitle("Views in Sliceace channel between 2011 to 2017")
+   
+   p2 <- ggplot(dataframe2, aes(date,yaxis2)) + geom_line() + geom_area() +
+   ggtitle("Views in james channel between 2014 and 2017")
+   
    plot_p1 <- ggplotly(p1)
    plot_p2 <- ggplotly(p2)
-   grid.arrange(plot_p1, plot_p2, ncol=2)
+   subplot(plot_p1, plot_p2)
 }
 
 # call to the function that allows you to change you axis label
