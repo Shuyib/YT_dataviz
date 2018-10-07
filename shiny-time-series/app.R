@@ -9,6 +9,7 @@ library(lubridate)
 library(colourpicker)
 library(DT)
 library(plotly)
+library(gridExtra)
 
 # importing the data with the read_csv function
 # my channel verus James Karanu's channel 
@@ -26,17 +27,28 @@ df %>% ggplot(aes(date, subscribers_gained)) + geom_line() + geom_area()
 
 # Make a function that will allow you to call a different variable in the y axis 
 # adding ggplotly functionality
-choose_y_axis_plot <- function(dataframe, yaxis) {
-   p <- ggplot(dataframe, aes(date, yaxis)) + geom_line() + geom_area()
-   ggplotly(p)
+# redo exercise to fix this
+choose_y_axis_plot <- function(dataframe, yaxis = readline(), dataframe2, yaxis2 = readline()) {
+   p1 <- ggplot(dataframe, aes(date, yaxis)) + geom_line() + geom_area()
+   p2 <- ggplot(dataframe2, aes(date,yaxis2)) + geom_line() + geom_area()
+   plot_p1 <- ggplotly(p1)
+   plot_p2 <- ggplotly(p2)
+   grid.arrange(plot_p1, plot_p2, ncol=2)
 }
 
 # call to the function that allows you to change you axis label
+# In the shiny app the user will have to this on their own unfortunately
 # change the labels to something the users can easily toggle
-choose_y_axis_plot(df, df$views)
+choose_y_axis_plot(df, df$views, df2, df2$views)
 
-# changing the columns that require dropdowns into factors
-# first these columns are not friendly to data visualization
+# Plans
+# make a Line and area plot like above
+# I'll need textinput for the user to enter the column that they are interested in and update
+# the title as the column updates
+# the labs column will also require a textinput to relabel the y-axis
+# A code book tab to show the user what the variables mean 
+# subsetted plot to compare users that are independent of each other
+# a line of best fit as well include it 
 
 
 # Define UI for application: consists of various things the user will interract with
