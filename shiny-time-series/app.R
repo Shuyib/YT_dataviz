@@ -28,16 +28,22 @@ df %>% ggplot(aes(date, subscribers_gained)) + geom_line() + geom_area()
 # Make a function that  will allow you to call a different variable in the y axis 
 # adding ggplotly functionality
 # redo exercise to fix this
+# fix the title or add a subtitle to distinguish the plots
 choose_y_axis_plot <- function(dataframe, yaxis = readline(), dataframe2, yaxis2 = readline()) {
-   p1 <- ggplot(dataframe, aes(date, yaxis)) + geom_line() + geom_area() +
+  # define variable p1 with ggplot specifications for the first plot 
+  p1 <- ggplot(dataframe, aes(date, yaxis)) + geom_line() + geom_area(fill = "green") +
    xlab("Date") + ylab("Views") 
-   
-   p2 <- ggplot(dataframe2, aes(date,yaxis2)) + geom_line() + geom_area() +
-   xlab("Date") + ylab("Views")
-   
-   plot_p1 <- ggplotly(p1)
-   plot_p2 <- ggplotly(p2)
-   subplot(plot_p1, plot_p2, titleX = TRUE, titleY = TRUE)
+  
+  # for the second plot 
+  p2 <- ggplot(dataframe2, aes(date,yaxis2)) + geom_line() + geom_area(fill = "red") +
+  xlab("Date") + ylab("Views")
+  
+  # convert the plots to plotly plots this is how it's done 
+  plot_p1 <- ggplotly(p1)
+  plot_p2 <- ggplotly(p2)
+  
+  # arrange the two plots to appear side by side
+  subplot(plot_p1, plot_p2, titleX = TRUE, titleY = TRUE)
 }
 
 # call to the function that allows you to change you axis label
