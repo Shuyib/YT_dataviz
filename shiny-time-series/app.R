@@ -43,7 +43,7 @@ choose_y_axis_plot <- function(dataframe, yaxis = readline(), dataframe2, yaxis2
   plot_p2 <- ggplotly(p2)
   
   # arrange the two plots to appear side by side
-  subplot(plot_p1, plot_p2, titleX = TRUE, titleY = TRUE,margin = 0.05)
+  subplot(plot_p1, plot_p2, titleX = TRUE, titleY = TRUE, margin = 0.05)
 }
 
 # call to the function that allows you to change you axis label
@@ -59,6 +59,7 @@ choose_y_axis_plot(df, df$views, df2, df2$views)
 # A code book tab to show the user what the variables mean 
 # subsetted plot to compare users that are independent of each other
 # a line of best fit as well include it 
+# A side bar with the names of the channels, can they be reactive
 
 
 # Define UI for application: consists of various things the user will interract with
