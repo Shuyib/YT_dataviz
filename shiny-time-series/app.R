@@ -20,10 +20,16 @@ df2 <- read_csv('data/exotic_yt_date.csv')
 # date and any other variables that follow which i presume will be in the y axis
 
 # starter code for the plot
-ggplot(df, aes(date, subscribers_gained)) + geom_area() + geom_line()
+p1 <- ggplot(df, aes(date, subscribers_gained)) + geom_line() + geom_area(fill = "red") +
+  xlab("Date") + ylab("Views") + labs(caption = "Sliceace channel")
 
 # Using pipes
-df %>% ggplot(aes(date, subscribers_gained)) + geom_line() + geom_area()
+p2 <- df2 %>% ggplot(aes(date, subscribers_gained)) + geom_line() + geom_area(fill = "green") +
+  xlab("Date") + ylab("Views") + labs(caption = "James channel")
+
+
+# joining the plots to appear side by side
+grid.arrange(p1,p2, ncol = 2)
 
 # Make a function that  will allow you to call a different variable in the y axis 
 # adding ggplotly functionality
@@ -31,12 +37,14 @@ df %>% ggplot(aes(date, subscribers_gained)) + geom_line() + geom_area()
 # fix the title or add a subtitle to distinguish the plots
 choose_y_axis_plot <- function(dataframe, yaxis = readline(), dataframe2, yaxis2 = readline()) {
   # define variable p1 with ggplot specifications for the first plot 
-  p1 <- ggplot(dataframe, aes(date, yaxis)) + geom_line() + geom_area(fill = "green") +
+  p1 <- ggplot(dataframe, aes(date, yaxis)) + geom_area(fill = "green") +
    xlab("Date") + ylab("Views") + labs(caption = "Sliceace channel")
   
   # for the second plot 
-  p2 <- ggplot(dataframe2, aes(date,yaxis2)) + geom_line() + geom_area(fill = "red") +
+  p2 <- ggplot(dataframe2, aes(date,yaxis2)) + geom_area(fill = "red") +
   xlab("Date") + ylab("Views") + labs(caption = "James channel")
+  
+  # joining the plots together with regular ggplot2
   
   # convert the plots to plotly plots this is how it's done 
   plot_p1 <- ggplotly(p1)
