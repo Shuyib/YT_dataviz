@@ -16,16 +16,24 @@ library(gridExtra)
 df <- read_csv('data/yt_date.csv') 
 df2 <- read_csv('data/exotic_yt_date.csv')
 
+# make columns for the name of the channel
+channel_name <- rep("Sliceace", 573)
+channel_name2 <- rep("James channel", 1526)
+
+# bind this column to the df and df2 datasets
+df <- df %>% mutate(channel = channel_name)
+df2 <- df2 %>% mutate(channel = channel_name2)
+
 # identifying the columns of interest 
 # date and any other variables that follow which i presume will be in the y axis
 
 # starter code for the plot
 p1 <- ggplot(df, aes(date, subscribers_gained)) + geom_line() + geom_area(fill = "red") +
-  xlab("Date") + ylab("Views") + labs(caption = "Sliceace channel")
+  xlab("Date") + ylab("Views") + labs(caption = "Sliceace channel") + scale_color_brewer()
 
 # Using pipes
 p2 <- df2 %>% ggplot(aes(date, subscribers_gained)) + geom_line() + geom_area(fill = "green") +
-  xlab("Date") + ylab("Views") + labs(caption = "James channel")
+  xlab("Date") + ylab("Views") + labs(caption = "James channel") + scale_color_brewer()
 
 
 # joining the plots to appear side by side
@@ -37,12 +45,12 @@ grid.arrange(p1,p2, ncol = 2)
 # fix the title or add a subtitle to distinguish the plots
 choose_y_axis_plot <- function(dataframe, yaxis = readline(), dataframe2, yaxis2 = readline()) {
   # define variable p1 with ggplot specifications for the first plot 
-  p1 <- ggplot(dataframe, aes(date, yaxis)) + geom_area(fill = "green") +
-   xlab("Date") + ylab("Views") + labs(caption = "Sliceace channel")
+  p1 <- ggplot(dataframe, aes(date, yaxis, group = channel)) + geom_line() +
+   xlab("Date") + ylab("Views")
   
   # for the second plot 
-  p2 <- ggplot(dataframe2, aes(date,yaxis2)) + geom_area(fill = "red") +
-  xlab("Date") + ylab("Views") + labs(caption = "James channel")
+  p2 <- ggplot(dataframe2, aes(date,yaxis2, group = channel_name2)) + geom_line() + 
+  xlab("Date") + ylab("Views")
   
   # joining the plots together with regular ggplot2
   
