@@ -17,6 +17,9 @@ df <- read_csv('data/yt_date.csv')
 df2 <- read_csv('data/exotic_yt_date.csv')
 
 # make columns for the name of the channel
+# Potential source of input requires nrow(df), nrow(df2)
+# for different channels apart from these ones
+# template: rep("add name of your channel", nrow(df)) and rep("add name of your channel", nrow(df2))
 channel_name <- rep("Sliceace", 573)
 channel_name2 <- rep("James channel", 1526)
 
@@ -45,11 +48,11 @@ grid.arrange(p1,p2, ncol = 2)
 # fix the title or add a subtitle to distinguish the plots
 choose_y_axis_plot <- function(dataframe, yaxis = readline(), dataframe2, yaxis2 = readline()) {
   # define variable p1 with ggplot specifications for the first plot 
-  p1 <- ggplot(dataframe, aes(date, yaxis, group = channel)) + geom_line() +
+  p1 <- ggplot(dataframe, aes(date, yaxis, group = channel)) + geom_line() + geom_area(fill = "red") +
    xlab("Date") + ylab("Views")
   
   # for the second plot 
-  p2 <- ggplot(dataframe2, aes(date,yaxis2, group = channel_name2)) + geom_line() + 
+  p2 <- ggplot(dataframe2, aes(date,yaxis2, group = channel_name2)) + geom_line() + geom_area(fill = "green") +
   xlab("Date") + ylab("Views")
   
   # joining the plots together with regular ggplot2
