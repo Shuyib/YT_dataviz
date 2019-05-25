@@ -69,7 +69,7 @@ choose_y_axis_plot <- function(dataframe, yaxis = readline(), dataframe2, yaxis2
 # In the shiny app the user will have to this on their own unfortunately
 # change the labels to something the users can easily toggle
 choose_y_axis_plot(df, df$views, df2, df2$views)
-
+ 
 # Plans
 # make a Line and area plot like above
 # I'll need textinput for the user to enter the column that they are interested in and update
