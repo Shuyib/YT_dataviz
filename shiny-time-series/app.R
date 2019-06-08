@@ -20,7 +20,7 @@ df2 <- read_csv('data/exotic_yt_date.csv')
 # Potential source of input requires nrow(df), nrow(df2)
 # for different channels apart from these ones
 # template: rep("add name of your channel", nrow(df)) and rep("add name of your channel", nrow(df2))
-channel_name <- rep("Sliceace", 573)
+channel_name <- rep("Sliceace channel", 573)
 channel_name2 <- rep("James channel", 1526)
 
 # bind this column to the df and df2 datasets
@@ -48,18 +48,18 @@ grid.arrange(p1,p2, ncol = 2)
 # fix the title or add a subtitle to distinguish the plots
 choose_y_axis_plot <- function(dataframe, yaxis = readline(), dataframe2, yaxis2 = readline()) {
   # define variable p1 with ggplot specifications for the first plot 
-  p1 <- ggplot(dataframe, aes(date, yaxis, group = channel)) + geom_line() + geom_area(fill = "red") +
+  p3 <- ggplot(dataframe, aes(date, yaxis, group = channel)) + geom_line() + geom_area(fill = "red") +
    xlab("Date") + ylab("Views")
   
   # for the second plot 
-  p2 <- ggplot(dataframe2, aes(date,yaxis2, group = channel_name2)) + geom_line() + geom_area(fill = "green") +
+  p4 <- ggplot(dataframe2, aes(date, yaxis2, group = channel)) + geom_line() + geom_area(fill = "green") +
   xlab("Date") + ylab("Views")
   
   # joining the plots together with regular ggplot2
   
   # convert the plots to plotly plots this is how it's done 
-  plot_p1 <- ggplotly(p1)
-  plot_p2 <- ggplotly(p2)
+  plot_p1 <- ggplotly(p3)
+  plot_p2 <- ggplotly(p4)
   
   # arrange the two plots to appear side by side
   subplot(plot_p1, plot_p2, titleX = TRUE, titleY = TRUE, margin = 0.05)
