@@ -90,7 +90,7 @@ ui <- fluidPage(
    # Sidebar that takes various inputs into consideration 
    sidebarLayout(
       sidebarPanel(
-         selectInput(inputId = "",label = "",choices = "")),
+         selectInput(inputId = "xaxis",label = "Label X axis")),
          colourInput(inputId = "colour", label = "Choose another line color", value = "blue"),
          textInput(inputId = "yaxis", label = "Label Y axis" , value = "subscribers")))
       # placeholder to handle different inputs
