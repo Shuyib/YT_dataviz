@@ -11,11 +11,17 @@
 
 # Define UI for application: consists of various things the user will interract with
 ui <- fluidPage(
-   
+   sidebarLayout(
    # Application title
-   h1("Interractive YT data viz tool")
+   h1("Interractive YT data viz tool"),
+   br(),
+   # placeholders to handle input typed in by the user
+   #textInput(inputId = "title", label = "Title"),
+   #textInput("yaxis", "Label Y axis"),
+   #textInput("xaxis", "Label X axis")
+   
    # Sidebar that takes various inputs into consideration 
-)
+))
 
 # Define server logic required to draw plot and the interractive dataframe
 server <- function(input, output) {}
