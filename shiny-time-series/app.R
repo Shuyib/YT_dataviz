@@ -16,6 +16,7 @@ library(DT)
 df <- read_csv('/Users/aoi-rain/Documents/YT_dataviz/data/yt_date.csv') 
 df2 <- read_csv('/Users/aoi-rain/Documents/YT_dataviz/data/exotic_yt_date.csv')
 
+# make category columns for this dataset
 channel_name <- rep("Sliceace channel", 573)
 channel_name2 <- rep("James channel", 1526)
 
