@@ -26,7 +26,7 @@ channel_name <- rep("Sliceace channel", nrow(df))
 channel_name2 <- rep("James channel", nrow(df2))
 
 # bind this column to the df and df2 datasets
-df <- df %>% mutate(channel1 = channel_name)
+df <- df %>% mutate(channel1 = channel_name) 
 df2 <- df2 %>% mutate(channel2 = channel_name2) 
 
 # change the columns into factors
@@ -44,16 +44,24 @@ ui <- fluidPage(
       sidebarPanel("sidebar panel",
                    textInput(inputId = "title", label = "Title", value = "Comparing two YouTube channels"),
                    textInput("yaxis", "Label Y axis", "Views"),
-                   textInput("xaxis", "Label X axis", "Date")),
+                   textInput("xaxis", "Label X axis", "Date"),
+                   dateRangeInput(inputId = "daterange",label = "Date",start = "2011-01-01", end = "2017-12-31")),
       # placeholder to input
-      sliderInput(inputId = "alpha1", label = "Line Transparency", min = 0, max = 1, value = 0.5),
-      sliderInput(inputId = "alpha2", label = "Dot Transparency", min = 0, max = 1, value = 0.5),
+      #sliderInput(inputId = "alpha1", label = "Line Transparency", min = 0, max = 1, value = 0.5),
+      #sliderInput(inputId = "alpha2", label = "Dot Transparency", min = 0, max = 1, value = 0.5),
       #checkboxInput("fit", "Add line of best fit", FALSE),
-      br()
-      mainPanel(plotlyOutput("plot"))
+      
+      #h4("Built with",
+     #    img(src = "https://www.rstudio.com/wp-content/uploads/2014/04/shiny.png", height = "30px"),
+      #   "by",
+      #   img(src = "https://www.rstudio.com/wp-content/uploads/2014/07/RStudio-Logo-Blue-Gray.png",
+      #       height = "30px"))),
+    
+      mainPanel(h3(textOutput("caption")),
+                plotOutput("mpgPlot"))
                 #downloadButton(outputId = "download_data", label = "Download data"),
                 #DT::dataTableOutput("table"))
-  ))
+  )))
 
 # Define server logic required to draw plot and the interractive dataframe
 server <- function(input, output) {
