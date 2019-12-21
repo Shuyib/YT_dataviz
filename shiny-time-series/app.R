@@ -14,6 +14,7 @@ library(shiny)
 library(tidyverse)
 library(plotly)
 library(DT)
+library(gridExtra)
 
 # load data 
 df <- read_csv('/Users/aoi-rain/Documents/YT_dataviz/data/yt_date.csv') 
@@ -43,29 +44,38 @@ ui <- fluidPage(
     sidebarLayout(position = "left",
       sidebarPanel("sidebar panel",
                    textInput(inputId = "title", label = "Title", value = "Comparing two YouTube channels"),
-                   textInput("yaxis", "Label Y axis", "Views"),
-                   textInput("xaxis", "Label X axis", "Date"),
-                   dateRangeInput(inputId = "daterange",label = "Date",start = "2011-01-01", end = "2017-12-31")),
+                   textInput("yaxis", "Label Y axis", "views"),
+                   textInput("xaxis", "Label X axis", "date"),
+                   dateRangeInput(inputId = "daterange",label = "Date",start = "2011-01-01", end = "2017-12-31"),
       # placeholder to input
-      #sliderInput(inputId = "alpha1", label = "Line Transparency", min = 0, max = 1, value = 0.5),
-      #sliderInput(inputId = "alpha2", label = "Dot Transparency", min = 0, max = 1, value = 0.5),
-      #checkboxInput("fit", "Add line of best fit", FALSE),
+      sliderInput(inputId = "alpha1", label = "Line Transparency", min = 0, max = 1, value = 0.5),
+      checkboxInput("fit", "Add line of best fit", FALSE),
       
-      #h4("Built with",
-     #    img(src = "https://www.rstudio.com/wp-content/uploads/2014/04/shiny.png", height = "30px"),
-      #   "by",
-      #   img(src = "https://www.rstudio.com/wp-content/uploads/2014/07/RStudio-Logo-Blue-Gray.png",
-      #       height = "30px"))),
+      br(),
+      h4("Built with",
+     img(src = "https://www.rstudio.com/wp-content/uploads/2014/04/shiny.png", height = "30px"),
+      "by",
+      img(src = "https://www.rstudio.com/wp-content/uploads/2014/07/RStudio-Logo-Blue-Gray.png",
+      height = "30px"))),
     
-      mainPanel(h3(textOutput("caption")),
-                plotOutput("mpgPlot"))
+      mainPanel(plotOutput("lineplot"))
                 #downloadButton(outputId = "download_data", label = "Download data"),
                 #DT::dataTableOutput("table"))
   )))
 
 # Define server logic required to draw plot and the interractive dataframe
 server <- function(input, output) {
+  output$lineplot <- renderPlot({
+    p1 <- ggplot(df, aes(date, views)) + geom_line(alpha = input$alpha1) + geom_area(fill = "red") +
+    xlab("Date") + ylab("Views") + labs(caption = "Sliceace channel") 
+    
+    p2 <- df2 %>% ggplot(aes(date, views)) + geom_line() + geom_area(fill = "green") +
+    xlab("Date") + ylab("Views") + labs(caption = "James channel") + scale_color_brewer(palette = "Greens")
   
+    # joining the plots to appear side by side
+    grid.arrange(p1,p2, ncol = 2)
+    
+  })
 }
 # Run the application 
 shinyApp(ui = ui, server = server)
