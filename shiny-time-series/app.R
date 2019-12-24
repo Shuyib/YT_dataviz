@@ -34,6 +34,12 @@ df2 <- df2 %>% mutate(channel2 = channel_name2)
 df$channel1 <- as.factor(df$channel1)
 df2$channel2 <- as.factor(df2$channel2)
 
+# get all the columns for both channels
+new_df <- df %>% select(-date, -channel1)
+new_df2 <- df2 %>% select(-date, -channel2)
+col_names_df <- names(new_df)
+col_names_df2 <- names(new_df2)
+
 # Define UI for application: consists of various things the user will interract with
 ui <- fluidPage(
    # Application title
@@ -44,8 +50,8 @@ ui <- fluidPage(
     sidebarLayout(position = "left",
       sidebarPanel("sidebar panel",
                    textInput(inputId = "title", label = "Title", value = "Comparing two YouTube channels"),
-                   textInput("yaxis", "Label Y axis", "views"),
-                   textInput("xaxis", "Label X axis", "date"),
+                   selectInput(inputId = "yaxis", "Label y axis", col_names_df),
+                   #selectInput("columns", "Columns", col_names_df, multiple = FALSE),
                    dateRangeInput(inputId = "daterange",label = "Date",start = "2011-01-01", end = "2017-12-31"),
       # placeholder to input
       sliderInput(inputId = "alpha1", label = "Line Transparency", min = 0, max = 1, value = 0.5),
@@ -58,20 +64,47 @@ ui <- fluidPage(
       img(src = "https://www.rstudio.com/wp-content/uploads/2014/07/RStudio-Logo-Blue-Gray.png",
       height = "30px"))),
     
-      mainPanel(plotOutput("lineplot"))
+      mainPanel(plotOutput("lineplot"), verbatimTextOutput("dfcol"))
                 #downloadButton(outputId = "download_data", label = "Download data"),
                 #DT::dataTableOutput("table"))
   )))
 
 # Define server logic required to draw plot and the interractive dataframe
+# needs a restructured dataframe a short one or find a way to change inputs effectively
+# try using a dropdown
+# used this https://stackoverflow.com/questions/39798042/r-shiny-how-to-use-multiple-inputs-from-selectinput-to-pass-onto-select-optio
 server <- function(input, output) {
+  
+  dataframe <- reactive({
+  data <- df
+  })
+  
+  dataframe2 <- reactive({
+    data <- df2
+  })
+  
+  
   output$lineplot <- renderPlot({
-    p1 <- ggplot(df, aes(date, views)) + geom_line(alpha = input$alpha1) + geom_area(fill = "red") +
+    
+    data <- dataframe()
+    data2 <- dataframe2()
+    
+    p1 <- ggplot(data, aes(date, views)) + geom_line(alpha = input$alpha1) + geom_area(fill = "red") +
     xlab("Date") + ylab("Views") + labs(caption = "Sliceace channel") 
     
-    p2 <- df2 %>% ggplot(aes(date, views)) + geom_line() + geom_area(fill = "green") +
-    xlab("Date") + ylab("Views") + labs(caption = "James channel") + scale_color_brewer(palette = "Greens")
-  
+    p2 <- data2 %>% ggplot(aes(date, views)) + geom_line() + geom_area(fill = "green") +
+    xlab("Date") + ylab("Views") + labs(caption = "James channel") 
+    
+    if (input$fit) {
+      p1 <- p1 + geom_smooth(method = "lm")
+    }
+    
+    
+    if (input$fit) {
+      p2 <- p2 + geom_smooth(method = "lm")
+    }
+    p1
+    p2
     # joining the plots to appear side by side
     grid.arrange(p1,p2, ncol = 2)
     
