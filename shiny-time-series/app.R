@@ -27,18 +27,23 @@ channel_name <- rep("Sliceace channel", nrow(df))
 channel_name2 <- rep("James channel", nrow(df2))
 
 # bind this column to the df and df2 datasets
-df <- df %>% mutate(channel1 = channel_name) 
-df2 <- df2 %>% mutate(channel2 = channel_name2) 
+df <- df %>% mutate(channel = channel_name) 
+df2 <- df2 %>% mutate(channel = channel_name2) 
+
+# bind the dataframes together
+df3 <- bind_rows(df,df2)
+df3$channel <- as.factor(df3$channel)
+
 
 # change the columns into factors
-df$channel1 <- as.factor(df$channel1)
-df2$channel2 <- as.factor(df2$channel2)
+df$channel <- as.factor(df$channel)
+df2$channel <- as.factor(df2$channel)
 
 # get all the columns for both channels
-new_df <- df %>% select(-date, -channel1)
-new_df2 <- df2 %>% select(-date, -channel2)
-col_names_df <- names(new_df)
-col_names_df2 <- names(new_df2)
+#new_df <- df %>% select(-date, -channel1)
+#new_df2 <- df2 %>% select(-date, -channel2)
+#col_names_df <- names(new_df)
+#col_names_df2 <- names(new_df2)
 
 # Define UI for application: consists of various things the user will interract with
 ui <- fluidPage(
@@ -50,8 +55,12 @@ ui <- fluidPage(
     sidebarLayout(position = "left",
       sidebarPanel("sidebar panel",
                    textInput(inputId = "title", label = "Title", value = "Comparing two YouTube channels"),
-                   selectInput(inputId = "yaxis", "Label y axis", col_names_df),
-                   #selectInput("columns", "Columns", col_names_df, multiple = FALSE),
+                   radioButtons("col_name", "Column name:",
+                                c("Watch time minutes" = "watch_time_minutes",
+                                  "Views" = "views",
+                                  "Youtube Red Views" = "youtube_red_views",
+                                  "Average View Duration" = "average_view_duration")),
+                   selectInput("columns", "Columns", names(df), multiple = FALSE),
                    dateRangeInput(inputId = "daterange",label = "Date",start = "2011-01-01", end = "2017-12-31"),
       # placeholder to input
       sliderInput(inputId = "alpha1", label = "Line Transparency", min = 0, max = 1, value = 0.5),
@@ -64,7 +73,7 @@ ui <- fluidPage(
       img(src = "https://www.rstudio.com/wp-content/uploads/2014/07/RStudio-Logo-Blue-Gray.png",
       height = "30px"))),
     
-      mainPanel(plotOutput("lineplot"), verbatimTextOutput("dfcol"))
+      mainPanel(plotOutput("lineplot"))
                 #downloadButton(outputId = "download_data", label = "Download data"),
                 #DT::dataTableOutput("table"))
   )))
@@ -83,14 +92,19 @@ server <- function(input, output) {
     data <- df2
   })
   
+  dataframe3 <- reactive({
+    data <- df3
+  })
+  
   
   output$lineplot <- renderPlot({
     
     data <- dataframe()
     data2 <- dataframe2()
+    data3 <- dataframe3()
     
-    p1 <- ggplot(data, aes(date, views)) + geom_line(alpha = input$alpha1) + geom_area(fill = "red") +
-    xlab("Date") + ylab("Views") + labs(caption = "Sliceace channel") 
+    p1 <- ggplot(data3, aes(date, views)) + geom_line(alpha = input$alpha1)  +
+    facet_grid( ~ channel)
     
     p2 <- data2 %>% ggplot(aes(date, views)) + geom_line() + geom_area(fill = "green") +
     xlab("Date") + ylab("Views") + labs(caption = "James channel") 
