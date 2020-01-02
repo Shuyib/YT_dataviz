@@ -20,6 +20,10 @@ library(gridExtra)
 df <- read_csv('/Users/aoi-rain/Documents/YT_dataviz/data/yt_date.csv') 
 df2 <- read_csv('/Users/aoi-rain/Documents/YT_dataviz/data/exotic_yt_date.csv')
 
+# transform the dataset into a short format
+df_transformed <- gather(df, "channel_properties", "number", 2:41, factor_key = TRUE, na.rm = TRUE)
+df2_transformed <- gather(df2, "channel_properties", "number", 2:41,factor_key = TRUE, na.rm = TRUE)
+
 # make category columns for this dataset
 # change this into something you can use someother person's channel
 # this could be text input column to export 
@@ -60,7 +64,10 @@ ui <- fluidPage(
                                   "Views" = "views",
                                   "Youtube Red Views" = "youtube_red_views",
                                   "Average View Duration" = "average_view_duration")),
-                   selectInput("columns", "Columns", names(df), multiple = FALSE),
+                   selectInput("columns", "Columns", c("Watch time minutes" = "watch_time_minutes",
+                                                       "Views" = "views",
+                                                       "Youtube Red Views" = "youtube_red_views",
+                                                       "Average View Duration" = "average_view_duration"), multiple = FALSE),
                    dateRangeInput(inputId = "daterange",label = "Date",start = "2011-01-01", end = "2017-12-31"),
       # placeholder to input
       sliderInput(inputId = "alpha1", label = "Line Transparency", min = 0, max = 1, value = 0.5),
@@ -85,7 +92,7 @@ ui <- fluidPage(
 server <- function(input, output) {
   
   dataframe <- reactive({
-  data <- df
+  data <- df[,c("views", input$columns)]
   })
   
   dataframe2 <- reactive({
@@ -103,8 +110,8 @@ server <- function(input, output) {
     data2 <- dataframe2()
     data3 <- dataframe3()
     
-    p1 <- ggplot(data3, aes(date, views)) + geom_line(alpha = input$alpha1)  +
-    facet_grid( ~ channel)
+    p1 <- ggplot(data3, aes(x = date, y = views)) + geom_line(alpha = input$alpha1)  +
+    facet_grid(~channel)
     
     p2 <- data2 %>% ggplot(aes(date, views)) + geom_line() + geom_area(fill = "green") +
     xlab("Date") + ylab("Views") + labs(caption = "James channel") 
