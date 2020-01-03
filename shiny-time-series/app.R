@@ -20,10 +20,6 @@ library(gridExtra)
 df <- read_csv('/Users/aoi-rain/Documents/YT_dataviz/data/yt_date.csv') 
 df2 <- read_csv('/Users/aoi-rain/Documents/YT_dataviz/data/exotic_yt_date.csv')
 
-# transform the dataset into a short format
-df_transformed <- gather(df, "channel_properties", "number", 2:41, factor_key = TRUE, na.rm = TRUE)
-df2_transformed <- gather(df2, "channel_properties", "number", 2:41,factor_key = TRUE, na.rm = TRUE)
-
 # make category columns for this dataset
 # change this into something you can use someother person's channel
 # this could be text input column to export 
@@ -33,6 +29,11 @@ channel_name2 <- rep("James channel", nrow(df2))
 # bind this column to the df and df2 datasets
 df <- df %>% mutate(channel = channel_name) 
 df2 <- df2 %>% mutate(channel = channel_name2) 
+
+# transform the dataset into a short format
+df_transformed <- gather(df, "channel_properties", "count", 2:41, factor_key = TRUE, na.rm = TRUE)
+df2_transformed <- gather(df2, "channel_properties", "count", 2:54,factor_key = TRUE, na.rm = TRUE)
+
 
 # bind the dataframes together
 df3 <- bind_rows(df,df2)
@@ -57,19 +58,12 @@ ui <- fluidPage(
   ui <- fluidPage(
     # simply used for arranging inputs in a panel which you can see in the application
     sidebarLayout(position = "left",
-      sidebarPanel("sidebar panel",
+      sidebarPanel(
                    textInput(inputId = "title", label = "Title", value = "Comparing two YouTube channels"),
-                   radioButtons("col_name", "Column name:",
-                                c("Watch time minutes" = "watch_time_minutes",
-                                  "Views" = "views",
-                                  "Youtube Red Views" = "youtube_red_views",
-                                  "Average View Duration" = "average_view_duration")),
-                   selectInput("columns", "Columns", c("Watch time minutes" = "watch_time_minutes",
-                                                       "Views" = "views",
-                                                       "Youtube Red Views" = "youtube_red_views",
-                                                       "Average View Duration" = "average_view_duration"), multiple = FALSE),
-                   dateRangeInput(inputId = "daterange",label = "Date",start = "2011-01-01", end = "2017-12-31"),
-      # placeholder to input
+                   selectInput("property","Channel property", choices = levels(df_transformed$channel_properties), selected = "views"),
+                   selectInput("property2","Second channel property", choices = levels(df2_transformed$channel_properties), selected = "views"),
+      
+                   # placeholder to input
       sliderInput(inputId = "alpha1", label = "Line Transparency", min = 0, max = 1, value = 0.5),
       checkboxInput("fit", "Add line of best fit", FALSE),
       
@@ -80,7 +74,7 @@ ui <- fluidPage(
       img(src = "https://www.rstudio.com/wp-content/uploads/2014/07/RStudio-Logo-Blue-Gray.png",
       height = "30px"))),
     
-      mainPanel(plotOutput("lineplot"))
+      mainPanel(plotlyOutput("lineplot"))
                 #downloadButton(outputId = "download_data", label = "Download data"),
                 #DT::dataTableOutput("table"))
   )))
@@ -92,29 +86,24 @@ ui <- fluidPage(
 server <- function(input, output) {
   
   dataframe <- reactive({
-  data <- df[,c("views", input$columns)]
+  data <- df_transformed %>% filter(channel_properties == input$property) 
   })
   
   dataframe2 <- reactive({
-    data <- df2
-  })
-  
-  dataframe3 <- reactive({
-    data <- df3
+    data2 <- df2_transformed %>% filter(channel_properties == input$property2)
   })
   
   
-  output$lineplot <- renderPlot({
+  output$lineplot <- renderPlotly({
     
     data <- dataframe()
     data2 <- dataframe2()
-    data3 <- dataframe3()
     
-    p1 <- ggplot(data3, aes(x = date, y = views)) + geom_line(alpha = input$alpha1)  +
-    facet_grid(~channel)
+    p1 <- ggplot(data, aes(x = date, y = count)) + geom_line(alpha = input$alpha1) +  geom_area(fill = "yellow") + xlab("Date") +
+      ylab(input$property) + labs(caption = data$channel) 
     
-    p2 <- data2 %>% ggplot(aes(date, views)) + geom_line() + geom_area(fill = "green") +
-    xlab("Date") + ylab("Views") + labs(caption = "James channel") 
+    p2 <- data2 %>% ggplot(aes(date, count)) + geom_line(input$alpha) + geom_area(fill = "green") +
+    xlab("Date") + ylab(input$property2) + labs(caption = data2$channel) 
     
     if (input$fit) {
       p1 <- p1 + geom_smooth(method = "lm")
@@ -125,9 +114,17 @@ server <- function(input, output) {
       p2 <- p2 + geom_smooth(method = "lm")
     }
     p1
+    
     p2
     # joining the plots to appear side by side
-    grid.arrange(p1,p2, ncol = 2)
+    #grid.arrange(p1,p2, ncol = 2)
+    
+    # convert the plots to plotly plots this is how it's done 
+    plot_p1 <- ggplotly(p1)
+    plot_p2 <- ggplotly(p2)
+    
+    # arrange the two plots to appear side by side
+    subplot(plot_p1, plot_p2, titleX = TRUE, titleY = TRUE, margin = 0.1)
     
   })
 }
