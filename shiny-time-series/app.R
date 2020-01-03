@@ -59,7 +59,7 @@ ui <- fluidPage(
     # simply used for arranging inputs in a panel which you can see in the application
     sidebarLayout(position = "left",
       sidebarPanel(
-                   textInput(inputId = "title", label = "Title", value = "Comparing two YouTube channels"),
+                   
                    selectInput("property","Channel property", choices = levels(df_transformed$channel_properties), selected = "views"),
                    selectInput("property2","Second channel property", choices = levels(df2_transformed$channel_properties), selected = "views"),
       
@@ -74,7 +74,7 @@ ui <- fluidPage(
       img(src = "https://www.rstudio.com/wp-content/uploads/2014/07/RStudio-Logo-Blue-Gray.png",
       height = "30px"))),
     
-      mainPanel(plotlyOutput("lineplot"))
+      mainPanel("Comparing properties of two YT channels Sliceace (left) and James channel (right)", plotlyOutput("lineplot"))
                 #downloadButton(outputId = "download_data", label = "Download data"),
                 #DT::dataTableOutput("table"))
   )))
@@ -113,7 +113,7 @@ server <- function(input, output) {
     if (input$fit) {
       p2 <- p2 + geom_smooth(method = "lm")
     }
-    p1
+    p1 
     
     p2
     # joining the plots to appear side by side
