@@ -15,6 +15,7 @@ library(tidyverse)
 library(plotly)
 library(DT)
 library(gridExtra)
+library(shinythemes)
 
 # load data 
 df <- read_csv('/Users/aoi-rain/Documents/YT_dataviz/data/yt_date.csv') 
@@ -30,25 +31,15 @@ channel_name2 <- rep("James channel", nrow(df2))
 df <- df %>% mutate(channel = channel_name) 
 df2 <- df2 %>% mutate(channel = channel_name2) 
 
+# replace the underscores with a space instead
+names(df) <- str_replace_all(names(df),"_", " ")
+names(df2) <- str_replace_all(names(df2),"_", " ")
+
 # transform the dataset into a short format
 df_transformed <- gather(df, "channel_properties", "count", 2:41, factor_key = TRUE, na.rm = TRUE)
 df2_transformed <- gather(df2, "channel_properties", "count", 2:54,factor_key = TRUE, na.rm = TRUE)
 
 
-# bind the dataframes together
-df3 <- bind_rows(df,df2)
-df3$channel <- as.factor(df3$channel)
-
-
-# change the columns into factors
-df$channel <- as.factor(df$channel)
-df2$channel <- as.factor(df2$channel)
-
-# get all the columns for both channels
-#new_df <- df %>% select(-date, -channel1)
-#new_df2 <- df2 %>% select(-date, -channel2)
-#col_names_df <- names(new_df)
-#col_names_df2 <- names(new_df2)
 
 # Define UI for application: consists of various things the user will interract with
 ui <- fluidPage(
@@ -56,14 +47,14 @@ ui <- fluidPage(
    h1("Interractive YT data viz tool"),
    br(),
   ui <- fluidPage(
+    themeSelector(),
     # simply used for arranging inputs in a panel which you can see in the application
     sidebarLayout(position = "left",
       sidebarPanel(
-                   
                    selectInput("property","Channel property", choices = levels(df_transformed$channel_properties), selected = "views"),
                    selectInput("property2","Second channel property", choices = levels(df2_transformed$channel_properties), selected = "views"),
       
-                   # placeholder to input
+      # placeholder to input
       sliderInput(inputId = "alpha1", label = "Line Transparency", min = 0, max = 1, value = 0.5),
       checkboxInput("fit", "Add line of best fit", FALSE),
       
@@ -74,10 +65,18 @@ ui <- fluidPage(
       img(src = "https://www.rstudio.com/wp-content/uploads/2014/07/RStudio-Logo-Blue-Gray.png",
       height = "30px"))),
     
-      mainPanel("Comparing properties of two YT channels Sliceace (left) and James channel (right)", plotlyOutput("lineplot"))
+      mainPanel("Comparing properties of two YT channels Sliceace (left) and James channel (right) from 2011 to 2017", 
+                tabsetPanel(type = "tabs",
+                            tabPanel("Plot", plotlyOutput("lineplot")),
+                            tabPanel("YT channel", DT::dataTableOutput("table")),
+                            tabPanel("Another YT channel", DT::dataTableOutput("table2")),
+                        
+                downloadButton(outputId = "sliceace_data", label = "channel1 data"),
+                downloadButton(outputId = "james_data", label = "channel2 data"))
+     
                 #downloadButton(outputId = "download_data", label = "Download data"),
-                #DT::dataTableOutput("table"))
-  )))
+                #)
+  ))))
 
 # Define server logic required to draw plot and the interractive dataframe
 # needs a restructured dataframe a short one or find a way to change inputs effectively
@@ -127,6 +126,34 @@ server <- function(input, output) {
     subplot(plot_p1, plot_p2, titleX = TRUE, titleY = TRUE, margin = 0.1)
     
   })
+  output$table <- DT::renderDataTable({
+    data <- dataframe()
+    
+  })
+  # download filtered data from the functions above
+  output$sliceace_data <- downloadHandler(
+    # The downloaded file is named "filtered_data.csv"
+    filename = "filtered_data1.csv",
+    content = function(file) {
+      data <- dataframe()
+      write.csv(data, file, row.names = FALSE)}
+  )
+  
+  output$table2 <- DT::renderDataTable({
+    data2 <- dataframe2()
+    
+  })
+  
+ 
+  # download filtered data from the functions above
+  output$james_data <- downloadHandler(
+    # The downloaded file is named "filtered_data.csv"
+    filename = "filtered_data2.csv",
+    content = function(file) {
+      data2 <-  dataframe2()
+      write.csv(data2, file, row.names = FALSE)}
+  )
+  
 }
 # Run the application 
 shinyApp(ui = ui, server = server)
