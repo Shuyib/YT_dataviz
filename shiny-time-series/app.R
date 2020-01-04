@@ -14,24 +14,23 @@ library(shiny)
 library(tidyverse)
 library(plotly)
 library(DT)
-library(gridExtra)
 library(shinythemes)
 
 # load data 
 df <- read_csv('/Users/aoi-rain/Documents/YT_dataviz/data/yt_date.csv') 
 df2 <- read_csv('/Users/aoi-rain/Documents/YT_dataviz/data/exotic_yt_date.csv')
 
-# make category columns for this dataset
-# change this into something you can use someother person's channel
-# this could be text input column to export 
+
+# label the dataset for each channel
 channel_name <- rep("Sliceace channel", nrow(df))
 channel_name2 <- rep("James channel", nrow(df2))
 
-# bind this column to the df and df2 datasets
+# bind these columns to the df and df2 datasets
 df <- df %>% mutate(channel = channel_name) 
 df2 <- df2 %>% mutate(channel = channel_name2) 
 
 # replace the underscores with a space instead
+# Easily readable by the user
 names(df) <- str_replace_all(names(df),"_", " ")
 names(df2) <- str_replace_all(names(df2),"_", " ")
 
@@ -42,6 +41,7 @@ df2_transformed <- gather(df2, "channel_properties", "count", 2:54,factor_key = 
 
 
 # Define UI for application: consists of various things the user will interract with
+# in the shiny application
 ui <- fluidPage(
    # Application title
    h1("Interractive YT data viz tool"),
@@ -70,18 +70,24 @@ ui <- fluidPage(
                             tabPanel("Plot", plotlyOutput("lineplot")),
                             tabPanel("YT channel", DT::dataTableOutput("table")),
                             tabPanel("Another YT channel", DT::dataTableOutput("table2")),
-                        
-                downloadButton(outputId = "sliceace_data", label = "channel1 data"),
-                downloadButton(outputId = "james_data", label = "channel2 data"))
-     
-                #downloadButton(outputId = "download_data", label = "Download data"),
-                #)
+                            tabPanel("Reference",
+                                    br(),
+                                    tags$a("Dean Attali course on datacamp", href = "https://www.datacamp.com/courses/building-web-applications-in-r-with-shiny-case-studies"), 
+                                    br(),
+                                    tags$a("Mine Çentikaya Rundel courses", href = "https://resources.rstudio.com/webinars/intro-to-shiny?prevItm=NaN&prevCol=&ts=258978"),
+                                    br(),
+                                    tags$a("Mine's Github", href = "https://github.com/mine-cetinkaya-rundel"),
+                                    br(),
+                                    tags$a("Plotly documentation", href = "https://plot.ly/r/"),
+                                    br(),
+                                    tags$a("Tidyverse documentation (dplyr, stringr, readr, ggplot)", href = "https://www.tidyverse.org/"),
+                                    br(),
+                                    tags$a("Shiny documentation", href = "https://shiny.rstudio.com/")))
+                                            
+                      
   ))))
 
 # Define server logic required to draw plot and the interractive dataframe
-# needs a restructured dataframe a short one or find a way to change inputs effectively
-# try using a dropdown
-# used this https://stackoverflow.com/questions/39798042/r-shiny-how-to-use-multiple-inputs-from-selectinput-to-pass-onto-select-optio
 server <- function(input, output) {
   
   dataframe <- reactive({
@@ -126,33 +132,16 @@ server <- function(input, output) {
     subplot(plot_p1, plot_p2, titleX = TRUE, titleY = TRUE, margin = 0.1)
     
   })
+  
   output$table <- DT::renderDataTable({
     data <- dataframe()
     
   })
-  # download filtered data from the functions above
-  output$sliceace_data <- downloadHandler(
-    # The downloaded file is named "filtered_data.csv"
-    filename = "filtered_data1.csv",
-    content = function(file) {
-      data <- dataframe()
-      write.csv(data, file, row.names = FALSE)}
-  )
   
   output$table2 <- DT::renderDataTable({
     data2 <- dataframe2()
     
   })
-  
- 
-  # download filtered data from the functions above
-  output$james_data <- downloadHandler(
-    # The downloaded file is named "filtered_data.csv"
-    filename = "filtered_data2.csv",
-    content = function(file) {
-      data2 <-  dataframe2()
-      write.csv(data2, file, row.names = FALSE)}
-  )
   
 }
 # Run the application 
