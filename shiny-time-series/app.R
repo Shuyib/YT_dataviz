@@ -35,6 +35,7 @@ names(df) <- str_replace_all(names(df),"_", " ")
 names(df2) <- str_replace_all(names(df2),"_", " ")
 
 # transform the dataset into a short format
+# alternatively you could try using the aes_string to map the x and y coordinates of the plot
 df_transformed <- gather(df, "channel_properties", "count", 2:41, factor_key = TRUE, na.rm = TRUE)
 df2_transformed <- gather(df2, "channel_properties", "count", 2:54,factor_key = TRUE, na.rm = TRUE)
 
@@ -43,28 +44,33 @@ df2_transformed <- gather(df2, "channel_properties", "count", 2:54,factor_key = 
 # Define UI for application: consists of various things the user will interract with
 # in the shiny application
 ui <- fluidPage(
-   # Application title
+   # Application title in HTML
    h1("Interractive YT data viz tool"),
-   br(),
+   br(), # line break
+  # simply used for arranging inputs in a panel which you can see in the application 
   ui <- fluidPage(
-    themeSelector(),
-    # simply used for arranging inputs in a panel which you can see in the application
+    themeSelector(), # controls theme changes dropdown
     sidebarLayout(position = "left",
       sidebarPanel(
-                   selectInput("property","Channel property", choices = levels(df_transformed$channel_properties), selected = "views"),
-                   selectInput("property2","Second channel property", choices = levels(df2_transformed$channel_properties), selected = "views"),
+      # placeholders to handle input typed in by the user
+      selectInput(inputId = "property", label = "Channel property", choices = levels(df_transformed$channel_properties), selected = "views"),
+      selectInput(inputId = "property2", label = "Second channel property", choices = levels(df2_transformed$channel_properties), selected = "views"),
       
       # placeholder to input
       sliderInput(inputId = "alpha1", label = "Line Transparency", min = 0, max = 1, value = 0.5),
-      checkboxInput("fit", "Add line of best fit", FALSE),
+      checkboxInput(inputId = "fit", label = "Add line of best fit", value = FALSE),
       
       br(),
+      # more HTML to draw the logos in the left panel
       h4("Built with",
      img(src = "https://www.rstudio.com/wp-content/uploads/2014/04/shiny.png", height = "30px"),
       "by",
       img(src = "https://www.rstudio.com/wp-content/uploads/2014/07/RStudio-Logo-Blue-Gray.png",
       height = "30px"))),
-    
+     
+     # what appears in the main panel of the layout   
+     # Title of plot text
+     # tabs to hold the plot, data tables and references
       mainPanel("Comparing properties of two YT channels Sliceace (left) and James channel (right) from 2011 to 2017", 
                 tabsetPanel(type = "tabs",
                             tabPanel("Plot", plotlyOutput("lineplot")),
@@ -90,7 +96,10 @@ ui <- fluidPage(
 # Define server logic required to draw plot and the interractive dataframe
 server <- function(input, output) {
   
+  # reactive object to reduce code duplication
   dataframe <- reactive({
+  
+  # take the imported dataframe then change it based on user input in the dropdown in the UI
   data <- df_transformed %>% filter(channel_properties == input$property) 
   })
   
@@ -99,17 +108,23 @@ server <- function(input, output) {
   })
   
   
+  # defining plot makeup with plotly functionality
   output$lineplot <- renderPlotly({
     
-    data <- dataframe()
-    data2 <- dataframe2()
-    
-    p1 <- ggplot(data, aes(x = date, y = count)) + geom_line(alpha = input$alpha1) +  geom_area(fill = "yellow") + xlab("Date") +
+  # reactive object that reduces code duplication as well as speeding up my code  
+  data <- dataframe()
+  data2 <- dataframe2()
+  
+  # defining plots that appear in the UI
+  # I think if the columns were in another form  without transformation aes_string would be more useful
+  p1 <- ggplot(data, aes(x = date, y = count)) + geom_line(alpha = input$alpha1) +  geom_area(fill = "yellow") + xlab("Date") +
       ylab(input$property) + labs(caption = data$channel) 
     
-    p2 <- data2 %>% ggplot(aes(date, count)) + geom_line(input$alpha) + geom_area(fill = "green") +
-    xlab("Date") + ylab(input$property2) + labs(caption = data2$channel) 
+  p2 <- data2 %>% ggplot(aes(date, count)) + geom_line(input$alpha) + geom_area(fill = "green") +
+      xlab("Date") + ylab(input$property2) + labs(caption = data2$channel) 
     
+  # add functionality for linear modelling with a 95% confidence interval
+  # It is applied to both plots as opposed to one.
     if (input$fit) {
       p1 <- p1 + geom_smooth(method = "lm")
     }
@@ -118,11 +133,11 @@ server <- function(input, output) {
     if (input$fit) {
       p2 <- p2 + geom_smooth(method = "lm")
     }
+  
+    # call the plot objects
     p1 
     
     p2
-    # joining the plots to appear side by side
-    #grid.arrange(p1,p2, ncol = 2)
     
     # convert the plots to plotly plots this is how it's done 
     plot_p1 <- ggplotly(p1)
@@ -133,6 +148,7 @@ server <- function(input, output) {
     
   })
   
+  # show the resulting dataframe after tickering with the dropdown
   output$table <- DT::renderDataTable({
     data <- dataframe()
     
