@@ -8,8 +8,7 @@
 # a line of best fit as well include it 
 # A side bar with the names of the channels, can they be reactive
 # use this to make the application 
-# guide https://stackoverflow.com/questions/34384907/how-can-put-multiple-plots-side-by-side-in-shiny-r
-# first guide https://drive.google.com/drive/u/2/search?q=selectInput
+
 library(shiny)
 library(tidyverse)
 library(plotly)
@@ -17,8 +16,8 @@ library(DT)
 library(shinythemes)
 
 # load data 
-df <- read_csv('/Users/aoi-rain/Documents/YT_dataviz/data/yt_date.csv') 
-df2 <- read_csv('/Users/aoi-rain/Documents/YT_dataviz/data/exotic_yt_date.csv')
+df <- read_csv("../data/yt_date.csv") 
+df2 <- read_csv("../data/exotic_yt_date.csv")
 
 
 # label the dataset for each channel
@@ -76,6 +75,10 @@ ui <- fluidPage(
                             tabPanel("Plot", plotlyOutput("lineplot")),
                             tabPanel("YT channel", DT::dataTableOutput("table")),
                             tabPanel("Another YT channel", DT::dataTableOutput("table2")),
+                            tabPanel("Codebook", 
+                                     br(),
+                                     tags$a("Codebook the description of columns", href = "https://github.com/Shuyib/YT_dataviz/blob/master/codebook.txt")
+                            ),
                             tabPanel("Reference",
                                     br(),
                                     tags$a("Dean Attali course on datacamp", href = "https://www.datacamp.com/courses/building-web-applications-in-r-with-shiny-case-studies"), 
@@ -88,7 +91,8 @@ ui <- fluidPage(
                                     br(),
                                     tags$a("Tidyverse documentation (dplyr, stringr, readr, ggplot)", href = "https://www.tidyverse.org/"),
                                     br(),
-                                    tags$a("Shiny documentation", href = "https://shiny.rstudio.com/")))
+                                    tags$a("Shiny documentation", href = "https://shiny.rstudio.com/"))
+                           )
                                             
                       
   ))))
