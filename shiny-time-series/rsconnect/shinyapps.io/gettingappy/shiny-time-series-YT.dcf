@@ -1,0 +1,13 @@
+name: shiny-time-series-YT
+title: shiny-time-series-YT
+username:
+account: gettingappy
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 1627909
+bundleId: 2707128
+url: https://gettingappy.shinyapps.io/shiny-time-series-YT/
+when: 1578194434.89855
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: shny_plot_plans.jpg
