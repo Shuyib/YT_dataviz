@@ -1,5 +1,5 @@
 # YT_dataviz
-This is a Data visualisation tool, I presented at PyConKE on 28th September 2017 at USIU-Africa. I make use of Jupyter notebooks, Python, Pandas, Bokeh to make a multipurpose data visualisation tool that addresses the limitations i've seen in other alternatives according to the presentation i gave.
+This is a Data visualisation tool, I presented at PyConKE on 28th September 2017 at USIU-Africa. I make use of Jupyter notebooks, Python, Pandas, Bokeh to make a multipurpose data visualisation tool that addresses the limitations i've seen in other alternatives according to the presentation i gave. In addition, I made a Shiny application that's more user friendly check it out [here](https://gettingappy.shinyapps.io/shiny-time-series-YT/)
 
 You can reach me via email or saying Hi! on twitter [@Shuyin_ben](https://twitter.com/Shuyin_ben)
 
