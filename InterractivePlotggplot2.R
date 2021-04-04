@@ -13,8 +13,8 @@ library(gridExtra)
 
 # importing the data with the read_csv function
 # my channel verus James Karanu's channel 
-df <- read_csv('/Users/aoi-rain/Documents/YT_dataviz/data/yt_date.csv') 
-df2 <- read_csv('/Users/aoi-rain/Documents/YT_dataviz/data/exotic_yt_date.csv')
+df <- read_csv('~/data/yt_date.csv') 
+df2 <- read_csv('~/data/exotic_yt_date.csv')
 
 # make columns for the name of the channel
 # Potential source of input requires nrow(df), nrow(df2)
