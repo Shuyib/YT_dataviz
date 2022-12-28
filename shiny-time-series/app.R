@@ -16,8 +16,8 @@ library(DT)
 library(shinythemes)
 
 # load data 
-df <- read_csv("../data/yt_date.csv") 
-df2 <- read_csv("../data/exotic_yt_date.csv")
+df <- read_csv("data/yt_date.csv") 
+df2 <- read_csv("data/exotic_yt_date.csv")
 
 
 # label the dataset for each channel
